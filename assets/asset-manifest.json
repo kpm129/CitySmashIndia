@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "assets": [],
+  "originals": [
+    {
+      "id": "city-dioramas",
+      "localPath": "src/game/cities.ts",
+      "creator": "CitySmashIndia project / Codex",
+      "provenance": "Original procedural landmark assemblies based on general architectural silhouettes; no source photos copied or downloaded",
+      "usage": ["gameplay-buildings"]
+    },
+    {
+      "id": "scenery-effects",
+      "localPath": "src/game/scene.ts",
+      "creator": "CitySmashIndia project / Codex",
+      "provenance": "Original local vector scenery, pooled particles and disaster effects",
+      "usage": ["scenery", "effects"]
+    },
+    {
+      "id": "synthesized-audio",
+      "localPath": "src/app/audio.ts",
+      "creator": "CitySmashIndia project / Codex",
+      "provenance": "Original Web Audio oscillator composition and sound design; no sampled media",
+      "usage": ["music", "ambience", "sfx"]
+    },
+    {
+      "id": "power-icons",
+      "localPath": "src/app/icons.ts",
+      "creator": "CitySmashIndia project / Codex",
+      "provenance": "Original SVG paths",
+      "usage": ["ui"]
+    },
+    {
+      "id": "city-card-art",
+      "localPath": "src/main.ts",
+      "creator": "CitySmashIndia project / Codex",
+      "provenance": "Original inline SVG city illustrations",
+      "usage": ["city-card-thumbnail"]
+    }
+  ]
+}
