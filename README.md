@@ -2,7 +2,54 @@
 
 A browser-based, side-view city-destruction sandbox set in stylised versions of six Indian cities. The player chooses a city, selects a disaster power, and clicks or taps the scene to unleash it. There are no missions, scores, lives, win states, or loss states: the purpose is playful experimentation with physics, destruction, sound, and spectacle.
 
-> **Status:** Product and setup specification. This repository is intended to be implemented with Codex; this document does not imply that the game already exists.
+> **Status:** Runnable implementation. The original product specification follows the implementation notes below; it remains the target for release validation.
+
+## Running the implementation
+
+Node.js 22+ active LTS and npm 10+ are required. No server, API keys, or environment variables are required for gameplay.
+
+```bash
+npm ci
+npm run dev
+# Production:
+npm run build
+npm run preview
+```
+
+Choose one of six city cards, select a disaster and click/tap the scene. Strength ranges from 25–200%. The HTML HUD includes pause, quarter speed, day/night, music/SFX/master audio, Rebuild confirmation and city change. Help contains keyboard shortcuts and persistent reduced-motion/reduced-flash options. Browser audio starts after entering a city. Preferences persist locally; damage does not.
+
+### Implementation and assumptions
+
+- Phaser 3 uses its bundled Matter engine. The default renderer is Canvas 2D: production cloud-browser sampling measured about 60 FPS versus 18–20 FPS with software WebGL for these vector-only scenes. This is a measured exception to the original WebGL preference, not a hardware performance certification. Original pre-cut structural chunks detach into physical bodies with collision, friction, gravity and sleeping. Damage is accumulated per chunk; destruction measures lost integrity. All cities have different authored landmark assemblies, height profiles, palettes and scenery seeds.
+- Artwork, city thumbnails, icons and synthesized audio are original local procedural work. This intentionally uses vector geometry instead of raster/generated artwork so breakable structures match their authored pieces; no external photographs or recordings are shipped. Provenance is in `public/assets/asset-manifest.json` and `THIRD_PARTY_NOTICES.md`. No project-code license is assumed.
+- The fixed 1200×650 logical scene uses FIT scaling. In narrow or short viewports it letterboxes to preserve target mapping; landscape is recommended. HTML controls remain outside the gameplay surface. No camera dragging is provided.
+- Physics uses a fixed 60 Hz step and a 50 ms frame-delta clamp. Limits: 160 authored chunks, 260 pooled particles, 12 temporary volcanic rocks, 8 concurrent disasters, 16 audio voices. No meaningful visible structural debris is culled; only chunks beyond the world bounds are removed. A visible status explains input capacity. No progression, casualties, tracking, runtime downloads or backend.
+- Reset recreates the scene and clears disasters, debris, damage and simulation time. It returns to daylight and normal speed, preserving power, strength and accessibility/audio preferences.
+- Music and SFX are intentionally simple synthesized arrangements, not licensed sample packs or recordings. Supported browsers may reject audio nonfatally.
+
+### Validation
+
+```bash
+npm run format:check
+npm run lint
+npm run typecheck
+npm test
+npx playwright install chromium
+npm run test:e2e
+npm run validate:assets
+npm run build
+```
+
+If a managed environment blocks browser downloads, use an already installed compatible Chromium:
+
+```bash
+CHROMIUM_PATH=/usr/bin/chromium npm run test:e2e
+```
+
+On systems with a read-only home, set `PLAYWRIGHT_BROWSERS_PATH` to a writable cache directory for both installation and test execution. The application itself needs no such variable. Test/dev builds expose read-only `window.citysmash` diagnostics; production builds omit this adapter. Browser test screenshots go to the operating system temporary directory.
+
+See `docs/VALIDATION.md` for the executed checks, evidence and remaining release-validation limits. The full current Chrome/Edge/Firefox/Safari and physical-device performance matrix is a release requirement, not an implied result of Chromium automation.
+
 
 ## Product summary
 
